@@ -70,7 +70,46 @@ const Register = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  // Similar styles to Login screen
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  input: {
+    height: 50,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+  button: {
+    backgroundColor: '#ff6b6b',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  linkText: {
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  link: {
+    color: '#ff6b6b',
+    fontWeight: 'bold',
+  },
 });
 
 export default Register;
