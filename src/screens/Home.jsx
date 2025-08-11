@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigation = useNavigation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -28,7 +27,6 @@ const Home = () => {
   const fetchProducts = async () => {
     try {
       const response = await axios.get('https://dummyson.com/products');
-      // Filter for cosmetic products
       const cosmeticProducts = response.data.filter(product => 
         product.category === 'cosmetics' || 
         product.title.toLowerCase().includes('mascara') ||
@@ -42,84 +40,41 @@ const Home = () => {
     }
   };
 
-  const renderProduct = ({ item }) => (
-    <TouchableOpacity 
-      style={styles.productCard}
-      onPress={() => navigation.navigate('ProductDetails', { product: item })}
-    >
-      <Image source={{ uri: item.image }} style={styles.productImage} />
-      <Text style={styles.productTitle}>{item.title}</Text>
-      <Text style={styles.productPrice}>${item.price}</Text>
-    </TouchableOpacity>
-  );
-
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
+    <div className="bg-gray-100 min-h-screen">
+      {/* Search Bar */}
+      <div className="p-4 bg-white sticky top-0 z-10">
+        <input
+          type="text"
           placeholder="Search products..."
           value={searchQuery}
-          onChangeText={setSearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500"
         />
-      </View>
-      
-      <FlatList
-        data={filteredProducts}
-        renderItem={renderProduct}
-        keyExtractor={item => item.id.toString()}
-        numColumns={2}
-        contentContainerStyle={styles.productList}
-      />
-    </View>
+      </div>
+
+      {/* Product Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        {filteredProducts.map((product) => (
+          <div 
+            key={product.id}
+            onClick={() => navigate(`/product/${product.id}`, { state: { product } })}
+            className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+          >
+            <img 
+              src={product.image} 
+              alt={product.title}
+              className="w-full h-48 object-contain p-4"
+            />
+            <div className="p-4">
+              <h3 className="text-sm font-medium text-gray-900 truncate">{product.title}</h3>
+              <p className="mt-1 text-lg font-bold text-pink-600">${product.price}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f8f8',
-  },
-  searchContainer: {
-    padding: 15,
-    backgroundColor: '#fff',
-  },
-  searchInput: {
-    height: 40,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 15,
-    backgroundColor: '#f0f0f0',
-  },
-  productList: {
-    padding: 10,
-  },
-  productCard: {
-    flex: 1,
-    margin: 5,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
-    alignItems: 'center',
-    elevation: 2,
-  },
-  productImage: {
-    width: 120,
-    height: 120,
-    resizeMode: 'contain',
-  },
-  productTitle: {
-    marginTop: 8,
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  productPrice: {
-    marginTop: 4,
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#ff6b6b',
-  },
-});
 
 export default Home;

@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Onboarding from '../screens/Onboarding';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
@@ -8,44 +7,26 @@ import Home from '../screens/Home';
 import ProductDetails from '../screens/ProductDetails';
 import Profile from '../screens/Profile';
 
-const Stack = createStackNavigator();
-
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Onboarding">
-        <Stack.Screen 
-          name="Onboarding" 
-          component={Onboarding} 
-          options={{ headerShown: false }}
+    <Router>
+      <Routes>
+        {/* Onboarding - Shown only once (logic needed in Onboarding component) */}
+        <Route 
+          path="/" 
+          element={<Onboarding />} 
         />
-        <Stack.Screen 
-          name="Login" 
-          component={Login} 
-          options={{ title: 'Login' }}
-        />
-        <Stack.Screen 
-          name="Register" 
-          component={Register} 
-          options={{ title: 'Create Account' }}
-        />
-        <Stack.Screen 
-          name="Home" 
-          component={Home} 
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen 
-          name="ProductDetails" 
-          component={ProductDetails} 
-          options={{ title: 'Product Details' }}
-        />
-        <Stack.Screen 
-          name="Profile" 
-          component={Profile} 
-          options={{ title: 'My Profile' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+        
+        {/* Auth Screens */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        {/* Main App Screens */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
   );
 };
 
