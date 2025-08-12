@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 
-const Register = ({ navigation }) => {
+const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { register } = useContext(AuthContext);
+  const navigate = useNavigate(); 
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
@@ -15,9 +17,10 @@ const Register = ({ navigation }) => {
       return;
     }
     if (name && email && password) {
-      register(name, email, password);
+      register(name, email, password, navigate); // Pass navigate
     }
   };
+  
 
   return (
     <View style={styles.container}>

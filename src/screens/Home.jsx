@@ -34,15 +34,12 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://dummyson.com/products', {
-          timeout: 5000 // 5 second timeout
+        const response = await axios.get('https://fakestoreapi.com/products', {
+          timeout: 5000
         });
         
         const cosmeticProducts = response.data.filter(product => 
-          product.category?.toLowerCase() === 'cosmetics' || 
-          product.title?.toLowerCase().includes('mascara') ||
-          product.title?.toLowerCase().includes('lipstick') ||
-          product.title?.toLowerCase().includes('eyeliner')
+          product.category?.toLowerCase().includes('women')
         );
         
         setProducts(cosmeticProducts.length ? cosmeticProducts : mockProducts);

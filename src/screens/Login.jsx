@@ -1,15 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom'; // Add this import
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate(); // Add this line
 
   const handleLogin = () => {
     if (email && password) {
-      login(email, password);
+      login(email, password, navigate); // Pass navigate if needed
     }
   };
 
@@ -40,7 +42,7 @@ const Login = ({ navigation }) => {
       
       <Text style={styles.linkText}>
         Don't have an account?{' '}
-        <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
+        <Text style={styles.link} onPress={() => navigate('/register')}>
           Register Now
         </Text>
       </Text>
