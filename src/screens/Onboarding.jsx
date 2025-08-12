@@ -1,52 +1,28 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png'; // Make sure logo.png exists in assets
 
-const Onboarding = ({ navigation }) => {
+const Onboarding = () => {
+  const navigate = useNavigate();
+
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/logo.png')} style={styles.logo} />
-      <Text style={styles.tagline}>Your Beauty, Delivered</Text>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('Login')}
+    <div className="flex flex-col items-center justify-center min-h-screen p-5 bg-white">
+      <img 
+        src={logo} 
+        alt="GlowCart Logo" 
+        className="w-36 h-36 mb-8 object-contain" 
+      />
+      <h1 className="text-2xl font-bold text-gray-800 mb-10">
+        Your Beauty, Delivered
+      </h1>
+      <button
+        onClick={() => navigate('/login')}
+        className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full w-4/5 max-w-xs transition-colors"
       >
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableOpacity>
-    </View>
+        Get Started
+      </button>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  logo: {
-    width: 150,
-    height: 150,
-    marginBottom: 30,
-  },
-  tagline: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 40,
-    color: '#333',
-  },
-  button: {
-    backgroundColor: '#ff6b6b',
-    padding: 15,
-    borderRadius: 25,
-    width: '80%',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-});
 
 export default Onboarding;

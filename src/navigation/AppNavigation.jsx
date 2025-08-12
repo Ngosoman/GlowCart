@@ -11,7 +11,7 @@ const AppNavigator = () => {
   return (
     <Router>
       <Routes>
-        {/* Onboarding - Shown only once (logic needed in Onboarding component) */}
+        
         <Route 
           path="/" 
           element={<Onboarding />} 
