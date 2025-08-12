@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png'; // Make sure logo.png exists in assets
+import logo from '../assets/logo.png'; 
 
 const Onboarding = () => {
   const navigate = useNavigate();
